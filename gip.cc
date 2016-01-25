@@ -32,12 +32,12 @@ using v8::String;
 using v8::Number;
 using v8::Value;
 
-HICON getIconHandle(LPCWSTR filepath, UINT sizeFlg){
+HICON getIconHandle(LPCTSTR filepath, UINT sizeFlg){
 //from https://msdn.microsoft.com/ja-jp/library/windows/desktop/bb762179(v=vs.85).aspx
   CoInitialize(0);
   SHFILEINFOW sfi = {0};
   HRESULT hr = (HRESULT)SHGetFileInfoW(
-    filepath,
+    (LPCWSTR)filepath,
     0,
     &sfi,
     sizeof(sfi),
@@ -59,7 +59,7 @@ NAN_METHOD(GetSmallIcon){
   
 void GetFileIcon(const Nan::FunctionCallbackInfo<Value>& args, UINT sizeFlg ) {
   Isolate* isolate = args.GetIsolate();
-  LPCWSTR tg_item_path = (LPCWSTR)*v8::String::Value(args[0]->ToString());
+  LPCTSTR tg_item_path = (LPCTSTR)*v8::String::Value(args[0]->ToString());
   HICON hIcon = getIconHandle(tg_item_path, sizeFlg);
   if(hIcon == NULL){
      args.GetIsolate()->ThrowException(

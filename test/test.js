@@ -37,7 +37,7 @@ describe('icon create test',function(){
       var buf = putTestResult('dirByRelative.png', ret);
     });
     it('folder by absolute',()=>{
-      var ret = myModule.getLargeIcon("C:\\Develop\\node-native-education");
+      var ret = myModule.getLargeIcon("C:\\Develop\\gip");
       var buf = putTestResult('dirbyAbsolute.png', ret);
     });
     it('folder in data',()=>{
@@ -63,7 +63,7 @@ describe('icon create test',function(){
       var buf = putTestResult('dirByRelative.small.png', ret);
     });
     it('folder by absolute',()=>{
-      var ret = myModule.getSmallIcon("C:\\Develop\\node-native-education");
+      var ret = myModule.getSmallIcon("C:\\Develop\\gip");
       var buf = putTestResult('dirbyAbsolute.small.png', ret);
     });
     it('folder in data',()=>{
