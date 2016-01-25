@@ -32,12 +32,11 @@ using v8::String;
 using v8::Number;
 using v8::Value;
 
-HICON getIconHandle(LPCTSTR filepath, UINT sizeFlg){
+HICON getIconHandle(LPCWSTR filepath, UINT sizeFlg){
 //from https://msdn.microsoft.com/ja-jp/library/windows/desktop/bb762179(v=vs.85).aspx
-  CoInitialize(0);
   SHFILEINFOW sfi = {0};
   HRESULT hr = (HRESULT)SHGetFileInfoW(
-    (LPCWSTR)filepath,
+    filepath,
     0,
     &sfi,
     sizeof(sfi),
@@ -58,8 +57,9 @@ NAN_METHOD(GetSmallIcon){
 }
   
 void GetFileIcon(const Nan::FunctionCallbackInfo<Value>& args, UINT sizeFlg ) {
+  CoInitialize(0);
   Isolate* isolate = args.GetIsolate();
-  LPCTSTR tg_item_path = (LPCTSTR)*v8::String::Value(args[0]->ToString());
+  LPCWSTR tg_item_path = (LPCWSTR)*v8::String::Value(args[0]->ToString());
   HICON hIcon = getIconHandle(tg_item_path, sizeFlg);
   if(hIcon == NULL){
      args.GetIsolate()->ThrowException(
@@ -69,6 +69,7 @@ void GetFileIcon(const Nan::FunctionCallbackInfo<Value>& args, UINT sizeFlg ) {
   myBuffer myb;
   myb = {0,0};
   saveFileIconAsPng(hIcon, &myb);
+	::DestroyIcon(hIcon);
   args.GetReturnValue().Set(v8::Uint8Array::New(
     v8::ArrayBuffer::New(
       isolate, 
