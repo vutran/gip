@@ -1,0 +1,30 @@
+{
+  "name": "gip",
+  "version": "1.0.0",
+  "description": "get icon program",
+  "main": "gip.addon",
+  "dependencies": {
+    "chai": "^3.4.1",
+    "child-process-promise": "^1.1.0",
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-rename": "^1.2.2",
+    "mocha": "^2.3.4",
+    "rcedit": "^0.3.0"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^1.0.2",
+    "nan": "^2.1.0"
+  },
+  "scripts": {
+    "test": "mocha",
+    "install": "node-gyp rebuild"
+  },
+  "keywords": [
+    "icon",
+    "windows"
+  ],
+  "author": "yoshiyuki.mizogami",
+  "license": "MIT",
+  "gypfile": true
+}
