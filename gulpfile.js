@@ -52,16 +52,12 @@ gulp.task('build',['clean'],(clbk)=>{
 gulp.task('build-test',()=>{
 	var spawn = require('child_process').spawn;
 	var ps = spawn(
-	'node-gyp',
-		['rebuild',
-		 '--target=0.36.5',
-		 '--arch=ia32',
-		 '--dist-url=https://atom.io/download/atom-shell'
-		]
-	);
-	ps.on('data',(d)=>{
-		iconv.decode(d, 'shift_jis');
-	});
+	'node-gyp rebuild --target=0.36.5 --arch=ia32 --dist-url=https://atom.io/download/atom-shell'
+	).then(out=>{
+		console.log(iconv.decode(out, 'shift_jis'));
+	}).catch(e=>{
+		console.error(iconv.decode(e.stdout, 'shift_jis'));
+	})
 	
 });
 gulp.task('upload_gd',['build'],(clbk)=>{
